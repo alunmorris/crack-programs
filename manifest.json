@@ -1,0 +1,4 @@
+[
+  {"file": "counter_demo.py", "desc": "Animated counter with mono box"},
+  {"file": "sysinfo.py",      "desc": "Show memory and WiFi info"}
+]
