@@ -1,6 +1,5 @@
 [
   {"file": "fibonacci.py", "desc": "Benchmark using Fibonacci generation"},
   {"file": "sysinfo.py",      "desc": "Show memory and WiFi info"},
-  {"file": "airquality.py",   "desc": "Air quality for Lecco, Italy"},
-  {"file": "bubble_sort.py",  "desc": "Bubble sort benchmark"}
+  {"file": "airquality.py",   "desc": "Air quality for Lecco, Italy"}
 ]
