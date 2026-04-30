@@ -14,9 +14,9 @@ def _https_get(host, path):
     s.connect(addr)
     s = ssl.wrap_socket(s, server_hostname=host)
     s.write((
-        f"GET {path} HTTP/1.1\r\n"
+        f"GET {path} HTTP/1.0\r\n"
         f"Host: {host}\r\n"
-        "Connection: close\r\n\r\n"
+        "\r\n"
     ).encode())
     chunks = []
     try:
