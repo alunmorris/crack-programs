@@ -1,6 +1,5 @@
 [
   {"file": "fibonacci.py", "desc": "Benchmark using Fibonacci generation"},
-  {"file": "counter_demo.py", "desc": "Animated counter with mono box"},
   {"file": "sysinfo.py",      "desc": "Show memory and WiFi info"},
   {"file": "airquality.py",   "desc": "Air quality for Lecco, Italy"}
 ]
