@@ -53,6 +53,9 @@ def clock():
 __version__ = "1.2.1"
 
 print("pystone version ",__version__)
+print("Benchmarks - pystones/s")
+print("Pi Pico2  RP2350  2.48\nSBC      STM32F7  1.9\nPi Pico       RP2040  1.08\nWemos       ESP32  1.04")
+print("Feather     NFR52  0.7\nM5Stack   ESP32  0.66")
 
 [Ident1, Ident2, Ident3, Ident4, Ident5] = range(1, 6)
 
@@ -75,9 +78,8 @@ FALSE = 0
 
 def main(loops=LOOPS):
     benchtime, stones = pystones(loops)
-    print("Pystone(%s) time for %d passes = %g" % \
-          (__version__, loops, benchtime))
-    print("This machine benchmarks at %g pystones/second" % stones)
+    print("Time for %d passes: %.2f s" % (loops, benchtime))
+    print("Result: %.0f pystones/s" % stones)
 
 
 def pystones(loops=LOOPS):
