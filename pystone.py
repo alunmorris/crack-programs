@@ -53,9 +53,9 @@ def clock():
 __version__ = "1.2.1"
 
 print("pystone version ",__version__)
-print("Benchmarks - pystones/s")
-print("Pi Pico2  RP2350  2.48\nSBC      STM32F7  1.9\nPi Pico       RP2040  1.08\nWemos       ESP32  1.04")
-print("Feather     NFR52  0.7\nM5Stack   ESP32  0.66")
+print("Reference times (s) for 50000 loops:")
+print("Pi Pico2  RP2350  2.48\nSBC      STM32F7  1.9\nPi Pico  RP2040   1.08\nWemos    ESP32    1.04")
+print("Feather   NFR52   0.7\nM5Stack  ESP32    0.66")
 
 [Ident1, Ident2, Ident3, Ident4, Ident5] = range(1, 6)
 
