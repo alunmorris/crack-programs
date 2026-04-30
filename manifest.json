@@ -1,5 +1,10 @@
 [
-  {"file": "sysinfo.py",      "desc": "Show memory and WiFi info"},
-  {"file": "airquality.py",   "desc": "Air quality for Lecco, Italy"},
-  {"file": "pystone.py",      "desc": "Pystone benchmark"}
+  {
+    "file": "sysinfo.py",
+    "desc": "Show memory and WiFi info"
+  },
+  {
+    "file": "airquality.py",
+    "desc": "Air quality for Lecco, Italy"
+  }
 ]
