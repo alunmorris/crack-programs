@@ -3,6 +3,7 @@
 
 import time
 print("Fibonnaci benchmark")
+print("Returns error if not enough stack: maximum recurrsion depth exceeded\n")
 print("Benchmarks:\nFramework Laptop: 0.183s")
 print("Raspberry Pi Pico 2W:   0.183s")
 print("ESP32-S3:    0.183s")
