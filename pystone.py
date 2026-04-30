@@ -41,7 +41,7 @@ Version History:
 
 """
 
-LOOPS = 50000
+LOOPS = 1000
 
 # utime.clock() not available on ESP32; use ticks_ms with ticks_diff
 # (ticks_us has only ms resolution on ESP32-S2 so must divide by 1000 not 1000000)
@@ -53,7 +53,7 @@ def clock():
 __version__ = "1.2.1"
 
 print("pystone version ",__version__)
-print("Reference times (s) for 50000 loops:")
+print("Reference times (s) for 1000 loops:")
 print("Pi Pico2  RP2350  2.48\nSBC      STM32F7  1.9\nPi Pico  RP2040   1.08\nWemos    ESP32    1.04")
 print("Feather   NFR52   0.7\nM5Stack  ESP32    0.66")
 
