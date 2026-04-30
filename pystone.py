@@ -52,7 +52,7 @@ def clock():
 
 __version__ = "1.2.1"
 
-print("pystone v:",__version__)
+print("pystone version ",__version__)
 
 [Ident1, Ident2, Ident3, Ident4, Ident5] = range(1, 6)
 
