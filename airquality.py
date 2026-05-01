@@ -1,11 +1,14 @@
-# airquality.py — current air quality for Lecco, Italy (Open-Meteo)
+# airquality.py — 12-hour AQI forecast for Lecco, Italy (Open-Meteo)
+#010526 Chnage to a chart of next 2 days
+
 import socket, ssl, json, gc
 import wifi_mgr
 
 HOST = "air-quality-api.open-meteo.com"
 PATH = ("/v1/air-quality?latitude=45.85&longitude=9.4"
-        "&current=european_aqi,pm10,pm2_5,carbon_monoxide"
-        ",nitrogen_dioxide,ozone")
+        "&current=european_aqi"
+        "&hourly=european_aqi"
+        "&forecast_days=2")
 
 def _https_get(host, path):
     addr = socket.getaddrinfo(host, 443)[0][-1]
@@ -35,15 +38,6 @@ def _https_get(host, path):
         raise ValueError(raw[:60].decode())
     return raw[sep + 4:]
 
-def _aqi_label(v):
-    if v is None: return "?"
-    if v <= 20:   return "Good"
-    if v <= 40:   return "Fair"
-    if v <= 60:   return "Moderate"
-    if v <= 80:   return "Poor"
-    if v <= 100:  return "V.Poor"
-    return "Hazardous"
-
 tft.fill(0x0000)
 term = _TFTTerminal(tft, None, font=mono13)
 
@@ -52,7 +46,7 @@ def mprint(*args, **kwargs):
     end = kwargs.get('end', '\n')
     term.write(sep.join(str(a) for a in args) + end)
 
-mprint("Air Quality - Lecco, Italy")
+mprint("AQI Chart - Lecco")
 mprint("Connecting...")
 
 if not wifi_mgr.is_connected():
@@ -70,27 +64,52 @@ else:
         data = json.loads(body)
         gc.collect()
 
-        cur  = data['current']
-        t    = cur.get('time', '')[:16]
-        aqi  = cur.get('european_aqi')
-        pm10 = cur.get('pm10')
-        pm25 = cur.get('pm2_5')
-        co   = cur.get('carbon_monoxide')
-        no2  = cur.get('nitrogen_dioxide')
-        o3   = cur.get('ozone')
+        cur_time = data['current']['time']
+        h_times = data['hourly']['time']
+        h_aqis  = data['hourly']['european_aqi']
+
+        try:
+            start_idx = h_times.index(cur_time) + 1
+        except ValueError:
+            start_idx = 0
+
+        # Collect the next 12 hours of data
+        aqi_list = []
+        time_list = []
+        for i in range(start_idx, start_idx + 12):
+            if i < len(h_times):
+                time_list.append(h_times[i][-5:]) # "HH:MM"
+                aqi_list.append(h_aqis[i])
 
         tft.fill(0x0000)
         term = _TFTTerminal(tft, None, font=mono13)
+        mprint("Lecco AQI (Next 12h)")
 
-        mprint("Air Quality - Lecco, Italy")
-        mprint(f"Updated: {t}")
-        mprint("----------------------------------------")
-        mprint(f"European AQI : {str(aqi):<4} ({_aqi_label(aqi)})")
-        mprint(f"PM10         : {str(pm10):<7} ug/m3")
-        mprint(f"PM2.5        : {str(pm25):<7} ug/m3")
-        mprint(f"CO           : {str(co):<7} ug/m3")
-        mprint(f"NO2          : {str(no2):<7} ug/m3")
-        mprint(f"O3           : {str(o3):<7} ug/m3")
+        # Draw the Y-axis and chart data (0-100 scale, step 10)
+        for lvl in range(100, -1, -10):
+            row = f"{lvl:3}|"
+            for aqi in aqi_list:
+                if aqi is None:
+                    row += "   "
+                else:
+                    # Cap visual values at 100
+                    display_aqi = min(aqi, 100)
+                    # Round to the nearest 10-point interval
+                    nearest = round(display_aqi / 10) * 10
+                    if nearest == lvl:
+                        row += " # "
+                    else:
+                        row += "   "
+            mprint(row)
+
+        # Draw the X-axis
+        mprint("   +" + "-" * 36)
+        
+        # Draw the X-axis hour labels (extracting 'HH' from 'HH:MM')
+        labels = "    "
+        for t in time_list:
+            labels += f"{t[:2]:>2} "
+        mprint(labels)
 
     except Exception as e:
         mprint(f"Error: {e}")
