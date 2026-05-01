@@ -1,10 +1,14 @@
 [
   {
-    "file": "sysinfo.py",
-    "desc": "Show memory and WiFi info"
-  },
-  {
     "file": "airquality.py",
     "desc": "Air quality for Lecco, Italy"
+  },
+  {
+    "file": "counter_box_demo.py",
+    "desc": "Changing text in ASCII box"
+  },
+  {
+    "file": "sysinfo.py",
+    "desc": "Show memory and WiFi info"
   }
 ]
